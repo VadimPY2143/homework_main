@@ -39,8 +39,8 @@ async def shutdown():
 
 @app.get('/users/{user_id}')
 async def read_user(user_id: int = Path(..., title="user's id", description='This is the id of current user'),
-                    text: str = Query('', title = '',text = '')):
+                    text: str = Query('', title = "user's description",description = "This is the user's description")):
     query = users.select().where(users.c.id == user_id)
     user = await database.fetch_one(query)
-    return {'user': user,
+    return {'user': user_id,
             'text': text}
