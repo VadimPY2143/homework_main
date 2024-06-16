@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 import uvicorn
 from pydantic import BaseModel, ValidationError, field_validator
 from typing import Any
+import json
 from fastapi.responses import JSONResponse
 
 app = FastAPI()
@@ -46,15 +47,16 @@ class Item(BaseModel):
 
 books_base = []
 
-@app.post("/items/")
+@app.post("/books/")
 def create_item(item: Item):
     books_base.append(item)
-    return item
-
-@app.get('/books')
+    return item.json
+    #return JSONResponse(content=item.json, status_code=201)
+@app.get('/books/')
 def get_books():
     return books_base
+    #return JSONResponse(content=books_base, status_code=200)
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app)
