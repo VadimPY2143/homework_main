@@ -49,13 +49,12 @@ books_base = []
 
 @app.post("/books/")
 def create_item(item: Item):
-    books_base.append(item)
-    return item.json
-    #return JSONResponse(content=item.json, status_code=201)
+    books_base.append(item.model_dump_json())
+    return JSONResponse(content=item.model_dump_json(), status_code=201)
 @app.get('/books/')
 def get_books():
     return books_base
-    #return JSONResponse(content=books_base, status_code=200)
+
 
 
 if __name__ == "__main__":
