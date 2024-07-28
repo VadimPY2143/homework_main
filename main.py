@@ -22,5 +22,6 @@ async def websocket_(websocket: WebSocket):
             await websocket.send_json({'status': 'connected', 'message': f'{data}'})
 
     except WebSocketDisconnect:
+        await websocket.send_json({'status': 'disconnected'})
         await websocket.close()
 
